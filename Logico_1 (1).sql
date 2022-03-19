@@ -1,0 +1,376 @@
+/* Logico_1: */
+
+CREATE TABLE pessoa_producao (
+    codigo_pessoa INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL
+);
+
+CREATE TABLE cenas_e_momentos (
+    nome VARCHAR NOT NULL UNIQUE,
+    codigo_cm INTEGER PRIMARY KEY
+);
+
+CREATE TABLE genero (
+    nome VARCHAR NOT NULL UNIQUE,
+    codigo_gen INTEGER PRIMARY KEY
+);
+
+CREATE TABLE classif_indicativa (
+    idade INTEGER PRIMARY KEY
+);
+
+CREATE TABLE filme (
+    titulo VARCHAR NOT NULL,
+    codigo_mid INTEGER PRIMARY KEY,
+    arq_video VARCHAR NOT NULL UNIQUE,
+    sinopse VARCHAR NOT NULL,
+    duracao TIME NOT NULL,
+    fk_ano_prod_ano INTEGER
+);
+
+CREATE TABLE documentario (
+    titulo VARCHAR NOT NULL,
+    codigo_mid INTEGER PRIMARY KEY,
+    arq_video VARCHAR NOT NULL UNIQUE,
+    sinopse VARCHAR NOT NULL,
+    duracao TIME NOT NULL,
+    fk_ano_prod_ano INTEGER
+);
+
+CREATE TABLE perfil (
+    codigo_prfl INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL,
+    cod_foto INTEGER NOT NULL
+);
+
+CREATE TABLE minha_lista (
+    codigo_lista INTEGER PRIMARY KEY,
+    fk_perfil_codigo_prfl INTEGER
+);
+
+CREATE TABLE mensalidade (
+    data DATE PRIMARY KEY,
+    fk_assinatura_codigo_assi INTEGER,
+    fk_cartao_pagamento_numeracao INTEGER
+);
+
+CREATE TABLE conta (
+    email VARCHAR NOT NULL UNIQUE,
+    senha VARCHAR NOT NULL,
+    telefone INTEGER NOT NULL,
+    fk_pais_codigo_pais INTEGER
+);
+
+CREATE TABLE cartao_pagamento (
+    numeracao INTEGER PRIMARY KEY,
+    cvv INTEGER NOT NULL,
+    nome VARCHAR NOT NULL
+);
+
+CREATE TABLE assinatura (
+    codigo_assi INTEGER PRIMARY KEY,
+    valor FLOAT NOT NULL UNIQUE
+);
+
+CREATE TABLE legenda (
+    arq_legenda VARCHAR NOT NULL UNIQUE,
+    cod_idioma INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL UNIQUE,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE audio (
+    arq_audio VARCHAR NOT NULL UNIQUE,
+    cod_idioma INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL UNIQUE,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE funcao (
+    cod_funcao INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE serie (
+    temp INTEGER NOT NULL,
+    ep INTEGER NOT NULL,
+    titulo VARCHAR NOT NULL,
+    titulo_ep VARCHAR NOT NULL,
+    codigo_mid INTEGER PRIMARY KEY,
+    arq_video VARCHAR NOT NULL UNIQUE,
+    sinopse VARCHAR NOT NULL,
+    duracao TIME NOT NULL,
+    fk_ano_prod_ano INTEGER
+);
+
+CREATE TABLE ano_prod (
+    ano INTEGER PRIMARY KEY
+);
+
+CREATE TABLE pais (
+    codigo_pais INTEGER PRIMARY KEY,
+    nome VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE participacao (
+    fk_pessoa_producao_codigo_pessoa INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE categoria_strm (
+    fk_cenas_e_momentos_codigo_cm INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE categoria_univ (
+    fk_genero_codigo_gen INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE indicacao (
+    fk_classif_indicativa_idade INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE interage (
+    fk_perfil_codigo_prfl INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER,
+    hora_fim TIMESTAMP PRIMARY KEY,
+    hora_inicio TIMESTAMP NOT NULL
+);
+
+CREATE TABLE acrescenta (
+    fk_minha_lista_codigo_lista INTEGER,
+    fk_filme_codigo_mid INTEGER,
+    fk_documentario_codigo_mid INTEGER,
+    fk_serie_codigo_mid INTEGER
+);
+
+CREATE TABLE realiza (
+    fk_funcao_cod_funcao INTEGER,
+    fk_pessoa_producao_codigo_pessoa INTEGER
+);
+
+CREATE TABLE legislacao (
+    fk_pais_codigo_pais INTEGER,
+    fk_classif_indicativa_idade INTEGER
+);
+ 
+ALTER TABLE filme ADD CONSTRAINT FK_filme_2
+    FOREIGN KEY (fk_ano_prod_ano)
+    REFERENCES ano_prod (ano)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE documentario ADD CONSTRAINT FK_documentario_2
+    FOREIGN KEY (fk_ano_prod_ano)
+    REFERENCES ano_prod (ano)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE minha_lista ADD CONSTRAINT FK_minha_lista_2
+    FOREIGN KEY (fk_perfil_codigo_prfl)
+    REFERENCES perfil (codigo_prfl)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE mensalidade ADD CONSTRAINT FK_mensalidade_2
+    FOREIGN KEY (fk_assinatura_codigo_assi)
+    REFERENCES assinatura (codigo_assi)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE mensalidade ADD CONSTRAINT FK_mensalidade_3
+    FOREIGN KEY (fk_cartao_pagamento_numeracao)
+    REFERENCES cartao_pagamento (numeracao)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE conta ADD CONSTRAINT FK_conta_1
+    FOREIGN KEY (fk_pais_codigo_pais)
+    REFERENCES pais (codigo_pais)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE legenda ADD CONSTRAINT FK_legenda_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE legenda ADD CONSTRAINT FK_legenda_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE legenda ADD CONSTRAINT FK_legenda_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE audio ADD CONSTRAINT FK_audio_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE audio ADD CONSTRAINT FK_audio_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE audio ADD CONSTRAINT FK_audio_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE serie ADD CONSTRAINT FK_serie_2
+    FOREIGN KEY (fk_ano_prod_ano)
+    REFERENCES ano_prod (ano)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE participacao ADD CONSTRAINT FK_participacao_1
+    FOREIGN KEY (fk_pessoa_producao_codigo_pessoa)
+    REFERENCES pessoa_producao (codigo_pessoa)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE participacao ADD CONSTRAINT FK_participacao_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE participacao ADD CONSTRAINT FK_participacao_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE participacao ADD CONSTRAINT FK_participacao_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_strm ADD CONSTRAINT FK_categoria_strm_1
+    FOREIGN KEY (fk_cenas_e_momentos_codigo_cm)
+    REFERENCES cenas_e_momentos (codigo_cm)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE categoria_strm ADD CONSTRAINT FK_categoria_strm_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_strm ADD CONSTRAINT FK_categoria_strm_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_strm ADD CONSTRAINT FK_categoria_strm_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_univ ADD CONSTRAINT FK_categoria_univ_1
+    FOREIGN KEY (fk_genero_codigo_gen)
+    REFERENCES genero (codigo_gen)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE categoria_univ ADD CONSTRAINT FK_categoria_univ_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_univ ADD CONSTRAINT FK_categoria_univ_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE categoria_univ ADD CONSTRAINT FK_categoria_univ_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE indicacao ADD CONSTRAINT FK_indicacao_1
+    FOREIGN KEY (fk_classif_indicativa_idade)
+    REFERENCES classif_indicativa (idade)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE indicacao ADD CONSTRAINT FK_indicacao_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE indicacao ADD CONSTRAINT FK_indicacao_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE indicacao ADD CONSTRAINT FK_indicacao_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE interage ADD CONSTRAINT FK_interage_2
+    FOREIGN KEY (fk_perfil_codigo_prfl)
+    REFERENCES perfil (codigo_prfl)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE interage ADD CONSTRAINT FK_interage_3
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE interage ADD CONSTRAINT FK_interage_4
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE interage ADD CONSTRAINT FK_interage_5
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE acrescenta ADD CONSTRAINT FK_acrescenta_1
+    FOREIGN KEY (fk_minha_lista_codigo_lista)
+    REFERENCES minha_lista (codigo_lista)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE acrescenta ADD CONSTRAINT FK_acrescenta_2
+    FOREIGN KEY (fk_filme_codigo_mid)
+    REFERENCES filme (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE acrescenta ADD CONSTRAINT FK_acrescenta_3
+    FOREIGN KEY (fk_documentario_codigo_mid)
+    REFERENCES documentario (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE acrescenta ADD CONSTRAINT FK_acrescenta_4
+    FOREIGN KEY (fk_serie_codigo_mid)
+    REFERENCES serie (codigo_mid)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE realiza ADD CONSTRAINT FK_realiza_1
+    FOREIGN KEY (fk_funcao_cod_funcao)
+    REFERENCES funcao (cod_funcao)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE realiza ADD CONSTRAINT FK_realiza_2
+    FOREIGN KEY (fk_pessoa_producao_codigo_pessoa)
+    REFERENCES pessoa_producao (codigo_pessoa)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE legislacao ADD CONSTRAINT FK_legislacao_1
+    FOREIGN KEY (fk_pais_codigo_pais)
+    REFERENCES pais (codigo_pais)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE legislacao ADD CONSTRAINT FK_legislacao_2
+    FOREIGN KEY (fk_classif_indicativa_idade)
+    REFERENCES classif_indicativa (idade)
+    ON DELETE SET NULL;
