@@ -1,0 +1,98 @@
+--quantas contas brasileiras cadastraram mais de uma mensalidade
+SELECT COUNT(codigo_usr) as numero_de_contas
+FROM conta 
+WHERE codigo_usr IN (SELECT codigo_usr
+                     FROM conta as c JOIN mensalidade as M ON (C.codigo_usr=M.fk_conta_codigo_usr) JOIN pais as P ON (c.fk_pais_codigo_pais=P.codigo_pais)
+                     WHERE P.nome='Brasil'
+                     GROUP by codigo_usr
+                     HAVING COUNT(*)> 1 )
+
+--quantos filmes por genero
+SELECT G.nome as genero, count(G.nome) as numero_de_filmes
+FROM filme as F JOIN categoria_univ as C ON (F.codigo_mid=C.fk_filme_codigo_mid) JOIN genero as G ON (C.fk_genero_codigo_gen=G.codigo_gen)
+GROUP BY G.nome
+
+--nome das pessoas que participaram de todos filmes que o dicaprio fez
+SELECT nome
+FROM pessoa_producao as Pext
+WHERE Pext.nome<>'Leonardo Dicaprio'
+AND NOT EXISTS(SELECT * FROM pessoa_producao as PE JOIN participacao as PA ON (PE.codigo_pessoa=PA.fk_pessoa_producao_codigo_pessoa)
+               JOIN filme as F ON (PA.fk_filme_codigo_mid=F.codigo_mid)
+               WHERE PE.nome='Leonardo Dicaprio'
+               AND F.titulo NOT IN(SELECT titulo
+                                   FROM filme as F JOIN participacao as PA ON (F.codigo_mid=PA.fk_filme_codigo_mid)
+                                   WHERE PA.fk_pessoa_producao_codigo_pessoa=Pext.codigo_pessoa))
+
+
+--a pessoa que mais participou de filmes
+SELECT nome
+FROM pessoa_producao
+WHERE codigo_pessoa IN(SELECT fk_pessoa_producao_codigo_pessoa
+              FROM filme as F JOIN participacao as PA ON (F.codigo_mid=PA.fk_filme_codigo_mid)
+              	GROUP by fk_pessoa_producao_codigo_pessoa
+                  HAVING count(*) IN (SELECT MAX(valores.contagem) FROM 
+                                    (SELECT COUNT(*)as contagem
+                                     FROM filme as F JOIN participacao as PA ON (F.codigo_mid=PA.fk_filme_codigo_mid)
+                                     GROUP BY fk_pessoa_producao_codigo_pessoa)valores))
+
+CREATE VIEW atores AS
+select P.nome as nome, P.codigo_pessoa As cod
+from pessoa_producao as P JOIN realiza as R on(P.codigo_pessoa = R.fk_pessoa_producao_codigo_pessoa) JOIN funcao as F ON(R.fk_funcao_cod_funcao = F.cod_funcao)
+WHERE F.nome = 'Ator'
+
+--nome dos atores que não são diretores
+SELECT atores.nome
+FROM atores
+WHERE atores.nome NOT IN(SELECT P.nome as nome
+                         FROM pessoa_producao as P JOIN realiza as R on(P.codigo_pessoa = R.fk_pessoa_producao_codigo_pessoa) JOIN funcao as F ON(R.fk_funcao_cod_funcao = F.cod_funcao)
+                         WHERE F.nome = 'Diretor')
+
+--numero de assinantes por tipo de plano, se tiver assinantes
+SELECT assinatura.valor as plano, COUNT(assinatura.valor) as numero_de_assinantes
+FROM conta as C JOIn mensalidade as M On (C.codigo_usr=M.fk_conta_codigo_usr) JOIN assinatura ON (assinatura.codigo_assi = M.fk_assinatura_codigo_assi)
+group by assinatura.valor
+
+--series com audio e legenda em frances
+SELECT S.titulo
+FROM serie as S join audio as A On(S.codigo_mid = A.fk_serie_codigo_mid) join legenda as L ON(L.fk_serie_codigo_mid = S.codigo_mid)
+WHERe a.nome = 'Francês' AND L.nome = 'Francês'
+
+--quantidade de contas que possuem algum perfil com minha lista
+SELECT count(DISTINCT C.codigo_usr) as quantidade_de_contas
+FROM conta AS C JOIN perfil as p ON (C.codigo_usr=P.fk_conta_codigo_usr) join minha_lista as M ON (P.codigo_prfl=M.fk_perfil_codigo_prfl)
+
+--atores que atuaram em 2022
+Select A.nome
+from filme as F join participacao as p ON(F.codigo_mid = P.fk_filme_codigo_mid)join atores as A on(a.cod = P.fk_pessoa_producao_codigo_pessoa)
+Where ano_prod = 2022
+
+--titulo dos filmes da categoria Kids (idade<=10 anos, no Brasil)
+select F.titulo
+FROM filme as F
+Where F.codigo_mid IN(select F.codigo_mid
+                         from indicacao as i join classif_indicativa as c on(i.fk_classif_indicativa_idade_pais = C.idade_pais)JOIN filme as F ON(F.codigo_mid = i.fk_filme_codigo_mid)
+                         Where C.idade_pais = '10BRA' OR C.idade_pais = 'LVBRA')
+
+
+-- Numero de series por categoria com audio em espanhol
+SELECT G.nome as genero, count(*) as numero_de_series
+FROM audio AS A Join serie as S ON(A.fk_serie_codigo_mid = S.codigo_mid)JOIN  categoria_univ as C ON(S.codigo_mid = C.fk_serie_codigo_mid) JOIN genero as G ON(C.fk_genero_codigo_gen = G.codigo_gen)
+WHERE A.nome = 'Espanhol'
+Group by G.nome
+
+--titulos dos filmes dirigidos por Martin Scorcese
+CREATE VIEW diretores AS
+select P.nome as nome, P.codigo_pessoa As cod
+from pessoa_producao as P JOIN realiza as R on(P.codigo_pessoa = R.fk_pessoa_producao_codigo_pessoa) JOIN funcao as F ON(R.fk_funcao_cod_funcao = F.cod_funcao)
+WHERE F.nome = 'Diretor'
+
+SELECT F.titulo
+FROM filme as F JOIN participacao as p ON(F.codigo_mid = P.fk_filme_codigo_mid) JOIN diretores ON(diretores.cod = P.fk_pessoa_producao_codigo_pessoa)
+Where diretores.nome = 'Martin Scorcese'
+
+--titulo dos curtas metragens de animacao
+SELECT titulo
+FROM filme
+Where duracao < '00:10:00' and filme.codigo_mid IN(SELECT F.codigo_mid
+                                           	       FROM filme as F JOIN categoria_univ as C ON (F.codigo_mid=C.fk_filme_codigo_mid) JOIN genero as G ON (C.fk_genero_codigo_gen=G.codigo_gen)
+                                                   Where G.nome = 'Animação')
