@@ -1,0 +1,165 @@
+--cartao_pagamento
+INSERT into cartao_pagamento VALUES(0000111122223333, '123', 'VLADIMIR VENEZO', '2022-03-22');
+INSERT into cartao_pagamento VALUES(1211212122121211, '124', 'RAMON JUNG',  '2022-05-25');
+INSERT into cartao_pagamento VALUES(1211212234567891, '125', 'JULES DUPONT',  '2022-05-27');
+--pais 
+INSERT into pais VALUES(55, 'Brasil');
+INSERT into pais VALUES(33, 'França');
+INSERT into pais VALUES(51, 'Peru');
+--conta
+INSERT into conta VALUES(1, 'vladimir@gmail.com', 'euamoquimica', 5551987651718,55);
+INSERT into conta VALUES(2, 'ramonjung@gmail.com', '212535',  55119574849017, 55);
+INSERT into conta VALUES(3, 'dupont@gmail.com', 'elsa',  33119574849017, 33);
+--assinatura
+INSERT into assinatura 	values(1, 25.90);
+INSERT into assinatura 	VALUES(2, 29.90);
+INSERT into assinatura 	values(3, 55.90);
+--mensalidade
+INSERT into mensalidade VALUES('2022-05-10', 1, 0000111122223333, '2022-03-22', 1);
+INSERT into mensalidade VALUES('2022-06-10', 1, 0000111122223333, '2022-03-22', 1);
+INSERT into mensalidade VALUES('2022-10-11', 2, 1211212122121211, '2022-05-25', 2);
+INSERT into mensalidade VALUES('2022-11-11', 2, 1211212122121211, '2022-05-25', 2);
+--Filme
+INSERT into filme VALUES('O lobo de Wall-Street', 1, 'olobodewallstreet.wmv', 'Jordan Belfort é um ambicioso corretor da bolsa de valores que cria um verdadeiro império, enriquecendo de forma rápida, porém ilegal', '02:18:00' ,2014);
+INSERT into filme VALUES('Ilha do medo', 2, 'ilhadomedo.wmv', 'Na década de 50, a fuga de uma assassina leva o detetive Teddy Daniels e seu parceiro a investigarem o seu desaparecimento de um quarto trancado em um hospital psiquiátrico.','03:00:00', 2010);
+INSERT into filme VALUES('The Batman', 3, 'Thebatman.wmv', 'Após dois anos espreitando as ruas como Batman, Bruce Wayne se encontra nas profundezas mais sombrias de Gotham City. ', '02:56:00' ,2022);
+INSERT into filme VALUES('O poderoso Chefão', 4, 'godfather.wmv', 'Uma família mafiosa luta para estabelecer sua supremacia nos Estados Unidos depois da Segunda Guerra Mundial.', '02:55:00' ,1972);
+INSERT into filme VALUES('Os incríveis', 5, 'incriveis.wmv', 'Depois do governo banir o uso de superpoderes, o maior herói do planeta, o Sr. Incrível, vive de forma pacata com sua família.', '01:55:00' ,2004);
+INSERT into filme VALUES('Geris Game', 6, 'geris.wmv', 'in an empty park in a large city, the title character, Geri, blows the leaves off a table and sets up a chessboard.', '00:05:00' ,1997);
+INSERT into filme VALUES('Klaus', 7, 'klaus.wmv', 'Um carteiro egoísta e um fabricante de brinquedos solitário cultivam uma amizade improvável e levam alegria a uma cidade fria e sombria.', '01:37:00' ,2009);
+
+--genero 
+INSERT into genero VALUES('Drama', 1);
+INSERT into genero VALUES('Comédia', 2);
+INSERT into genero VALUES('Mistério', 3);
+INSERT into genero VALUES('Ação', 4);
+INSERT into genero VALUES('Animação', 5);
+--categoria_univ
+INSERT into categoria_univ VALUES(1,1);
+INSERT into categoria_univ VALUES(2,1);
+INSERT into categoria_univ VALUES(3,2);
+INSERT into categoria_univ VALUES(4,3);
+INSERT into categoria_univ VALUES(1,4);
+INSERT into categoria_univ VALUES(4,4);
+INSERT into categoria_univ VALUES(5,5);
+INSERT into categoria_univ VALUES(5,6);
+--pessoa_producao
+INSERT into pessoa_producao VALUES(1,'Leonardo Dicaprio');
+INSERT into pessoa_producao VALUES(2,'Robert De Niro');
+INSERT into pessoa_producao VALUES(3,'Martin Scorcese');
+INSERT into pessoa_producao VALUES(4,'Robert Pattinson');
+INSERT into pessoa_producao VALUES(5,'Matt Reeves');
+INSERT into pessoa_producao VALUES(6,'Peter Craig');
+INSERT into pessoa_producao VALUES(7,'Francis Ford Coppola');
+INSERT into pessoa_producao VALUES(8,'Mario Puzo');
+INSERT into pessoa_producao VALUES(9,'Al Pacino');
+INSERT into pessoa_producao VALUES(10,'Jan Pinkava');
+INSERT into pessoa_producao VALUES(11,'Brad Bird');
+--funcao
+INSERT into funcao VALUES(1,'Diretor');
+INSERT into funcao VALUES(2,'Roteirista');
+INSERT into funcao VALUES(3,'Ator');
+--realiza
+INSERT into realiza VALUES(3,1);
+INSERT into realiza VALUES(1,1);
+INSERT into realiza VALUES(3,2);
+INSERT into realiza VALUES(1,3);
+INSERT into realiza VALUES(3,4);
+INSERT into realiza VALUES(2,5);
+INSERT into realiza VALUES(2,6);
+INSERT into realiza VALUES(1,6);
+INSERT into realiza VALUES(1,7);
+INSERT into realiza VALUES(2,8);
+INSERT into realiza VALUES(3,9);
+INSERT into realiza VALUES(1,10);
+INSERT into realiza VALUES(1,11);
+
+--participacao
+INSERT into participacao VALUES(1,1);
+INSERT into participacao VALUES(1,2);
+INSERT into participacao VALUES(2,1);
+INSERT into participacao VALUES(2,2);
+INSERT into participacao VALUES(2,3);
+INSERT into participacao VALUES(3,1);
+INSERT into participacao VALUES(3,2);
+INSERT into participacao VALUES(4,3);
+INSERT into participacao VALUES(5,3);
+INSERT into participacao VALUES(6,3);
+INSERT into participacao VALUES(7,4);
+INSERT into participacao VALUES(8,4);
+INSERT into participacao VALUES(9,4);
+INSERT into participacao VALUES(10,6);
+INSERT into participacao VALUES(10,5);
+
+--serie
+INSERT into serie VALUES(1,1,'Plan Coeur', 'O Plano Secreto', 1, 'oplanosecreto.wmv', 'Dois anos após o fim do namoro, Elsa continua obcecada pelo seu ex.', '00:26:00', 2018);
+INSERT into serie VALUES(1,1,'Le Chalet', ' Épisode 1', 2, 'lechalet1.wmv', 'O casal expectante, Adèle e Manu, chega a um chalé renovado na remota vila de Valmoline, nos Alpes franceses, onde a família de um escritor fracassado havia tentado recomeçar suas vidas 20 anos antes.', '00:47:40', 2018);
+INSERT into serie VALUES(1,1,'Breaking Bad', 'Pilot', 3, 'pilot.wmv', 'Walter White é um professor de química que descobre ter câncer no pulmão', '00:48:00', 2008);
+INSERT into serie VALUES(1,1, 'Narcos', 'Jogada de Mestre', 4, 'narcos1.wmv', 'A notória série sobre o tráfico é baseada na história real de violência e poder dos cartéis colombianos.', '00:56:50' ,2015);
+INSERT into serie VALUES(1,2,'Breaking Bad', 'Cats in the bag...', 5, 'catisinthebag.wmv', 'Walter e Jesse tentam arrumar os dois corpos no trailer, o que se mostra uma tarefa complicada', '00:48:00', 2008);
+--documentario
+insert into documentario Values('Ilha das Flores', 1, 'ilhadasflores.wmv', 'Um tomate é plantado, colhido, transportado e vendido num supermercado, mas apodrece e acaba no lixo. ', '00:13:11' ,1989);
+insert into documentario Values('Sartre e Camus: Uma Amizade Rompida', 2, 'camusartre.wmv', 'O olhar distraído dificilmente acreditaria que por trás do esnobismo de Sartre e do desinteresse de Camus, visivelmente mais entretido com o cachorro do que com os colegas, havia uma amizade tão intensa e verdadeira a ponto do nome de um imediatamente evocar o do outro – mesmo após o rompimento. ', '00:50:00' ,2017);
+insert into documentario Values('Seremos História?', 3, 'seremoshistoria.wmv', 'Leonardo DiCaprio embarca numa viagem de uma vida - Desde a Gronelândia, passando pelas florestas queimadas da Sumatra até aos halls do Vaticano, DiCaprio explora o impacto devastador das alterações climáticas no planeta', '01:30:00' ,2016);
+--audio
+INSERT into audio VALUES('plancoeur11fr.wav', 1, 'Francês', NULL, NULL, 1);
+INSERT into audio VALUES('lechalet11fr.wav', 2, 'Francês', NULL, NULL, 2);
+INSERT into audio VALUES('breakingbad11en.wav', 3, 'Inglês', NULL, NULL, 3);
+INSERT into audio VALUES('breakingbad12en.wav', 4, 'Inglês', NULL, NULL, 5);
+INSERT into audio VALUES('narcos11Es.wav', 5, 'Espanhol', NULL, NULL, 4);
+ --legenda
+INSERT into legenda VALUES('plancoeur11fr.srt', 1, 'Francês', NULL, NULL, 1);
+INSERT into legenda VALUES('lechalet11fr.srt', 2, 'Francês', NULL, NULL, 2);
+INSERT into legenda VALUES('breakingbad11en.srt', 3, 'Inglês', NULL, NULL, 3);
+INSERT into legenda VALUES('breakingbad12en.srt', 4, 'Inglês', NULL, NULL, 5);
+INSERT into legenda VALUES('narcos11Es.srt', 5, 'Espanhol', NULL, NULL, 4);
+--perfil
+INSERT into perfil VALUES(1,'Putin',1,1);
+INSERT into perfil VALUES(2,'Legna',1,1);
+INSERT into perfil VALUES(3,'Samuel',2,2);
+INSERT into perfil VALUES(4,'Pink',4,3);
+--minha_lista
+INSERT into minha_lista VALUES(1,1);
+INSERT into minha_lista VALUES(2,2);
+INSERT into minha_lista VALUES(3,3);
+--acrescenta
+INSErT INTO acrescenta VALUES(1,1);
+INSErT INTO acrescenta VALUES(2,NULL,NULL,2);
+INSErT INTO acrescenta VALUES(3,NULL,NULL,3);
+--categoria_univ
+INSERT into categoria_univ VALUES(4,NULL, NULL, 4);
+INSERT into categoria_univ VALUES(2,NULL, NULL, 1);
+INSERT into categoria_univ VALUES(4 ,NULL, NULL, 3);
+--classif_indicativa
+INSERT INTO classif_indicativa Values('LVBRA');
+INSERT INTO classif_indicativa Values('10BRA');
+INSERT INTO classif_indicativa Values('12BRA');
+INSERT INTO classif_indicativa Values('14BRA');
+INSERT INTO classif_indicativa Values('16BRA');
+INSERT INTO classif_indicativa Values('18BRA');
+--indicacao
+INSERT INTO indicacao Values('18BRA', 1);
+INSERT INTO indicacao Values('16BRA', 2);
+INSERT INTO indicacao Values('14BRA', 3);
+INSERT INTO indicacao Values('14BRA', 4);
+INSERT INTO indicacao Values('LVBRA', 5);
+INSERT INTO indicacao Values('LVBRA',  6);
+INSERT INTO indicacao Values('10BRA', 7);
+--legislacao
+INSERT INTO legislacao VALUES(55,'LVBRA');
+INSERT INTO legislacao VALUES(55,'18BRA');
+INSERT INTO legislacao VALUES(55,'16BRA');
+INSERT INTO legislacao VALUES(55,'14BRA');
+INSERT INTO legislacao VALUES(55,'10BRA');
+--cenas_e_momentos
+INSERT INTO cenas_e_momentos VALUES('Realidade Alternativa',1);
+INSERT INTO cenas_e_momentos VALUES('Sinistros',2);
+INSERT INTO cenas_e_momentos VALUES('Violentos',3);
+--categoria_strm
+INSERT INTO categoria_strm VALUES(1, 2);
+INSERT INTO categoria_strm VALUES(2, 2);
+INSERT INTO categoria_strm VALUES(3, NULL, NULL, 3);
+--interage
+INSERT INTO interage VALUES(1,2,NULL,NULL,'2022-01-08 04:20:06 -3:00','2022-01-08 04:05:10 -3:00');
+INSERT INTO interage VALUES(1,1,NULL,NULL,'2022-01-09 05:20:06 -3:00','2022-01-08 05:05:10 -3:00');
+INSERT INTO interage VALUES(2,3,NULL,NULL,'2022-01-10 06:20:06 -3:00','2022-01-08 06:05:10 -3:00');
